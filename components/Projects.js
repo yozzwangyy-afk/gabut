@@ -242,4 +242,101 @@ export default function Projects() {
         }
         
         .project-content h3 {
-          font-size
+          font-size: 1.4rem;
+          margin-bottom: 15px;
+          color: var(--text-color);
+        }
+        
+        .project-content p {
+          color: var(--light-text);
+          margin-bottom: 20px;
+          line-height: 1.6;
+        }
+        
+        .project-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-bottom: 20px;
+        }
+        
+        .tag {
+          background: var(--secondary-color);
+          color: var(--text-color);
+          padding: 5px 12px;
+          border-radius: 15px;
+          font-size: 0.8rem;
+          font-weight: 500;
+        }
+        
+        .project-actions {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        
+        .project-link {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: var(--accent-color);
+          text-decoration: none;
+          font-weight: 600;
+          transition: color 0.3s ease;
+        }
+        
+        .project-link:hover {
+          color: #ff6b95;
+        }
+        
+        .project-like {
+          background: none;
+          border: none;
+          color: var(--light-text);
+          cursor: pointer;
+          font-size: 1.2rem;
+          transition: color 0.3s ease;
+        }
+        
+        .project-like:hover {
+          color: var(--accent-color);
+        }
+        
+        .projects-cta {
+          text-align: center;
+          background: var(--card-bg);
+          padding: 40px;
+          border-radius: 20px;
+          box-shadow: var(--shadow);
+        }
+        
+        .projects-cta h3 {
+          font-size: 1.8rem;
+          margin-bottom: 10px;
+          color: var(--text-color);
+        }
+        
+        .projects-cta p {
+          color: var(--light-text);
+          margin-bottom: 20px;
+          font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+          .projects-grid {
+            grid-template-columns: 1fr;
+          }
+          
+          .projects-filter {
+            gap: 10px;
+          }
+          
+          .filter-btn {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+          }
+        }
+      `}</style>
+    </section>
+  )
+}
