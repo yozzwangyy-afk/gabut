@@ -1,6 +1,5 @@
 'use client'
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -23,10 +22,10 @@ export default function Header() {
             <span>Riyo</span>
           </div>
           <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-            <li><Link href="#home" onClick={() => setIsMenuOpen(false)}>Home</Link></li>
-            <li><Link href="#about" onClick={() => setIsMenuOpen(false)}>Tentang</Link></li>
-            <li><Link href="#projects" onClick={() => setIsMenuOpen(false)}>Project</Link></li>
-            <li><Link href="#contact" onClick={() => setIsMenuOpen(false)}>Kontak</Link></li>
+            <li><a href="#home" onClick={() => setIsMenuOpen(false)}>Home</a></li>
+            <li><a href="#about" onClick={() => setIsMenuOpen(false)}>Tentang</a></li>
+            <li><a href="#projects" onClick={() => setIsMenuOpen(false)}>Project</a></li>
+            <li><a href="#contact" onClick={() => setIsMenuOpen(false)}>Kontak</a></li>
           </ul>
           <div className="hamburger" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
