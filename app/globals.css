@@ -1,0 +1,145 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+  --primary-color: #fff5f7;
+  --secondary-color: #ffd6e7;
+  --accent-color: #ff85a2;
+  --text-color: #5a3a47;
+  --light-text: #8a6d7a;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --shadow: 0 8px 20px rgba(255, 133, 162, 0.15);
+  --gradient: linear-gradient(135deg, #fff5f7 0%, #ffeef5 100%);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--gradient);
+  color: var(--text-color);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section {
+  padding: 100px 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-title h2 {
+  font-size: 2.5rem;
+  color: var(--text-color);
+  position: relative;
+  display: inline-block;
+}
+
+.section-title h2::after {
+  content: '';
+  position: absolute;
+  width: 70%;
+  height: 4px;
+  background-color: var(--accent-color);
+  bottom: -10px;
+  left: 15%;
+  border-radius: 2px;
+}
+
+.btn {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: white;
+  padding: 12px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+}
+
+.btn:hover {
+  background-color: #ff6b95;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255, 133, 162, 0.4);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--accent-color);
+  color: var(--accent-color);
+}
+
+.btn-outline:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .section {
+    padding: 80px 0;
+  }
+  
+  .section-title h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+  
+  .section-title h2 {
+    font-size: 1.8rem;
+  }
+}
