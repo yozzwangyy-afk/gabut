@@ -1,30 +1,13 @@
-# Portofolio Riyo - Next.js
+# Portofolio Riyo - Anime Content Creator
 
-Portofolio personal untuk Riyo sebagai Anime Content Creator dibangun dengan Next.js 14.
-
-## Fitur
-- ✨ Dibangun dengan Next.js 14 (App Router)
-- 🎨 Tema pink keputihan dengan inspirasi Takanashi Hoshino
-- 📱 Responsif untuk semua perangkat
-- ⚡ Performa optimal dengan static generation
-- 🎯 SEO friendly
+Portofolio personal simpel dan elegan untuk Riyo sebagai Anime Content Creator.
 
 ## Teknologi
 - Next.js 14
 - React 18
-- CSS-in-JS (styled-jsx)
+- CSS-in-JS
 
 ## Development
-
 ```bash
-# Install dependencies
 npm install
-
-# Run development server
 npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
