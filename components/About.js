@@ -1,3 +1,5 @@
+'use client'
+
 export default function About() {
   const hobbies = [
     { icon: 'fas fa-tv', label: 'Menonton Anime' },
