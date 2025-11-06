@@ -20,14 +20,16 @@ export default function Hero() {
             onMouseLeave={() => setIsHovered(false)}
           >
             <div className={`profile-frame ${isHovered ? 'hovered' : ''}`}>
-              <Image 
-                src="https://files.catbox.moe/uzee63.jpg" 
-                alt="Riyo" 
-                width={200}
-                height={200}
-                className={`profile-img ${isHovered ? 'hovered' : ''}`}
-                priority
-              />
+              <div className="image-wrapper">
+                <Image 
+                  src="https://files.catbox.moe/uzee63.jpg" 
+                  alt="Riyo - Anime Content Creator" 
+                  width={200}
+                  height={200}
+                  className={`profile-img ${isHovered ? 'hovered' : ''}`}
+                  priority
+                />
+              </div>
             </div>
             <div className="floating-elements">
               <div className="floating-element element-1">✨</div>
@@ -118,6 +120,9 @@ export default function Hero() {
           background: linear-gradient(135deg, var(--accent), #ff6b95, #ffd6e7);
           animation: rotateGradient 8s linear infinite;
           transition: all 0.5s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         
         .profile-frame.hovered {
@@ -143,20 +148,26 @@ export default function Hero() {
           }
         }
         
+        .image-wrapper {
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          overflow: hidden;
+          border: 4px solid white;
+          background: white;
+        }
+        
         .profile-img {
           width: 100%;
           height: 100%;
-          border-radius: 50%;
           object-fit: cover;
-          border: 4px solid white;
           transition: all 0.5s ease;
           filter: grayscale(0.1);
         }
         
         .profile-img.hovered {
-          transform: scale(1.02);
+          transform: scale(1.05);
           filter: grayscale(0) brightness(1.05);
-          box-shadow: 0 0 30px rgba(255, 133, 162, 0.4);
         }
         
         .profile-glow {
@@ -428,6 +439,11 @@ export default function Hero() {
           .profile-frame {
             width: 180px;
             height: 180px;
+          }
+          
+          .image-wrapper {
+            width: 160px;
+            height: 160px;
           }
           
           .stats {
