@@ -17,16 +17,37 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    alert('Terima kasih! Pesan Anda telah dikirim. Saya akan membalas secepatnya!')
+    alert('Terima kasih atas pesan Anda! Saya akan membalas secepat mungkin.')
     setFormData({ name: '', email: '', message: '' })
   }
+
+  const socialMedia = [
+    {
+      icon: 'fab fa-youtube',
+      name: 'YouTube',
+      url: 'https://youtube.com/@riyoo_xd1?si=tY3Zan5gQiIlMaTa',
+      username: '@riyoo_xd1'
+    },
+    {
+      icon: 'fab fa-tiktok',
+      name: 'TikTok',
+      url: 'https://tiktok.com/@riyo_xd',
+      username: '@riyo_xd'
+    },
+    {
+      icon: 'fab fa-discord',
+      name: 'Discord',
+      url: 'https://discord.gg/MepY4jpG',
+      username: 'Server Discord'
+    }
+  ]
 
   return (
     <section className="contact section" id="contact">
       <div className="container">
         <div className="section-title">
           <h2>Hubungi Saya</h2>
-          <p>Mari berkolaborasi membuat konten anime yang amazing!</p>
+          <p>Silakan menghubungi saya untuk kolaborasi atau pertanyaan</p>
         </div>
         
         <div className="contact-content">
@@ -35,42 +56,72 @@ export default function Contact() {
               <div className="contact-icon">
                 <i className="fas fa-envelope"></i>
               </div>
-              <div>
-                <h3>Email</h3>
+              <div className="contact-details">
+                <h3>Alamat Email</h3>
                 <p>riyosenpai0@gmail.com</p>
+              </div>
+            </div>
+
+            <div className="social-media">
+              <h3>Media Sosial</h3>
+              <div className="social-links">
+                {socialMedia.map((social, index) => (
+                  <a 
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-link"
+                  >
+                    <div className="social-icon">
+                      <i className={social.icon}></i>
+                    </div>
+                    <div className="social-info">
+                      <div className="social-name">{social.name}</div>
+                      <div className="social-username">{social.username}</div>
+                    </div>
+                    <i className="fas fa-arrow-right social-arrow"></i>
+                  </a>
+                ))}
               </div>
             </div>
           </div>
 
           <form onSubmit={handleSubmit} className="contact-form">
             <div className="form-group">
+              <label htmlFor="name">Nama Lengkap</label>
               <input
                 type="text"
+                id="name"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="Nama Anda"
+                placeholder="Masukkan nama lengkap Anda"
                 className="form-control"
                 required
               />
             </div>
             <div className="form-group">
+              <label htmlFor="email">Alamat Email</label>
               <input
                 type="email"
+                id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="Email Anda"
+                placeholder="Masukkan alamat email Anda"
                 className="form-control"
                 required
               />
             </div>
             <div className="form-group">
+              <label htmlFor="message">Pesan</label>
               <textarea
+                id="message"
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                placeholder="Pesan Anda"
+                placeholder="Tulis pesan Anda di sini"
                 className="form-control"
                 rows="5"
                 required
@@ -88,21 +139,24 @@ export default function Contact() {
         }
         
         .contact-content {
-          max-width: 600px;
+          max-width: 800px;
           margin: 0 auto;
           display: grid;
+          grid-template-columns: 1fr 1fr;
           gap: 3rem;
         }
         
         .contact-info {
-          text-align: center;
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
         }
         
         .contact-item {
-          display: inline-flex;
+          display: flex;
           align-items: center;
           gap: 1rem;
-          padding: 1.5rem 2rem;
+          padding: 1.5rem;
           background: var(--card);
           border-radius: 15px;
           box-shadow: var(--shadow);
@@ -120,6 +174,81 @@ export default function Contact() {
           font-size: 1.2rem;
         }
         
+        .contact-details h3 {
+          margin-bottom: 0.5rem;
+          color: var(--text);
+          font-size: 1.1rem;
+        }
+        
+        .contact-details p {
+          color: var(--light-text);
+        }
+        
+        .social-media h3 {
+          margin-bottom: 1rem;
+          color: var(--text);
+          font-size: 1.1rem;
+        }
+        
+        .social-links {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+        
+        .social-link {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          padding: 1rem 1.5rem;
+          background: var(--card);
+          border-radius: 12px;
+          text-decoration: none;
+          color: var(--text);
+          transition: all 0.3s ease;
+          box-shadow: var(--shadow);
+        }
+        
+        .social-link:hover {
+          transform: translateX(5px);
+          box-shadow: 0 10px 25px rgba(255, 133, 162, 0.2);
+        }
+        
+        .social-icon {
+          width: 40px;
+          height: 40px;
+          background: var(--secondary);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--accent);
+          font-size: 1.1rem;
+        }
+        
+        .social-info {
+          flex: 1;
+        }
+        
+        .social-name {
+          font-weight: 600;
+          margin-bottom: 0.2rem;
+        }
+        
+        .social-username {
+          font-size: 0.8rem;
+          color: var(--light-text);
+        }
+        
+        .social-arrow {
+          color: var(--accent);
+          transition: transform 0.3s ease;
+        }
+        
+        .social-link:hover .social-arrow {
+          transform: translateX(3px);
+        }
+        
         .contact-form {
           background: var(--card);
           padding: 2rem;
@@ -129,6 +258,13 @@ export default function Contact() {
         
         .form-group {
           margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 600;
+          color: var(--text);
         }
         
         .form-control {
@@ -152,9 +288,18 @@ export default function Contact() {
         }
         
         @media (max-width: 768px) {
+          .contact-content {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+          
           .contact-item {
             flex-direction: column;
             text-align: center;
+          }
+          
+          .social-link {
+            padding: 1rem;
           }
         }
       `}</style>
