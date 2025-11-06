@@ -4,7 +4,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['files.catbox.moe', 'i.pinimg.com'],
+    domains: ['files.catbox.moe'],
     unoptimized: true
   },
 }
