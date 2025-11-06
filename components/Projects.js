@@ -3,17 +3,17 @@ export default function Projects() {
     {
       icon: 'fas fa-film',
       title: 'Anime Moment Edits',
-      description: 'Video edit momen-momen terbaik dari anime populer dengan transisi kreatif dan efek visual yang menarik.'
+      description: 'Video editing momen-momen terbaik dari anime populer dengan transisi kreatif dan efek visual yang menarik.'
     },
     {
       icon: 'fas fa-video',
       title: 'Short Content Anime',
-      description: 'Konten pendek untuk platform sosial media yang fokus pada scene-scene iconic dari berbagai anime.'
+      description: 'Konten pendek untuk platform media sosial yang fokus pada scene-scene ikonik dari berbagai anime.'
     },
     {
       icon: 'fas fa-paint-brush',
       title: 'AMV Creative',
-      description: 'Anime Music Video dengan konsep unik yang menggabungkan visual anime dengan musik yang tepat.'
+      description: 'Anime Music Video dengan konsep unik yang menggabungkan visual anime dengan musik yang sesuai.'
     }
   ]
 
