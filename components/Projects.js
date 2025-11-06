@@ -1,3 +1,5 @@
+'use client' // TAMBAHKAN INI
+
 export default function Projects() {
   const projects = [
     {
