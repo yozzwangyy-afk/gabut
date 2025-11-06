@@ -5,10 +5,23 @@ import Image from 'next/image'
 export default function Hero() {
   const [isVisible, setIsVisible] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
     setIsVisible(true)
   }, [])
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 20
+    setMousePosition({ x, y })
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+    setMousePosition({ x: 0, y: 0 })
+  }
 
   return (
     <section className="hero" id="home">
@@ -17,7 +30,8 @@ export default function Hero() {
           <div 
             className="profile-container"
             onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            onMouseLeave={handleMouseLeave}
+            onMouseMove={handleMouseMove}
           >
             <div className={`profile-frame ${isHovered ? 'hovered' : ''}`}>
               <div className="image-wrapper">
@@ -28,6 +42,9 @@ export default function Hero() {
                   height={200}
                   className={`profile-img ${isHovered ? 'hovered' : ''}`}
                   priority
+                  style={{
+                    transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`
+                  }}
                 />
               </div>
             </div>
@@ -74,141 +91,96 @@ export default function Hero() {
 
       <style jsx>{`
         .hero {
-          padding: 180px 0 100px;
-          text-align: center;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           position: relative;
           overflow: hidden;
         }
-        
-        .hero::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: radial-gradient(circle at 50% 50%, rgba(255, 133, 162, 0.1) 0%, transparent 50%);
-          pointer-events: none;
-        }
-        
-        .hero-content {
-          max-width: 800px;
+
+        .container {
+          max-width: 1200px;
           margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        .hero-content {
+          text-align: center;
           opacity: 0;
           transform: translateY(30px);
-          animation: fadeInUp 1s ease forwards;
+          transition: all 0.8s ease;
         }
-        
-        @keyframes fadeInUp {
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+
+        .hero-content.fade-in {
+          opacity: 1;
+          transform: translateY(0);
         }
-        
+
         .profile-container {
           position: relative;
           display: inline-block;
           margin-bottom: 2rem;
         }
-        
-        .profile-frame {
-          position: relative;
-          width: 220px;
-          height: 220px;
-          border-radius: 50%;
-          padding: 8px;
-          background: linear-gradient(135deg, var(--accent), #ff6b95, #ffd6e7);
-          animation: rotateGradient 8s linear infinite;
-          transition: all 0.5s ease;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        
-        .profile-frame.hovered {
-          transform: scale(1.05);
-          animation-duration: 4s;
-        }
-        
-        @keyframes rotateGradient {
-          0% {
-            background: linear-gradient(135deg, var(--accent), #ff6b95, #ffd6e7);
-          }
-          25% {
-            background: linear-gradient(135deg, #ff6b95, #ffd6e7, var(--accent));
-          }
-          50% {
-            background: linear-gradient(135deg, #ffd6e7, var(--accent), #ff6b95);
-          }
-          75% {
-            background: linear-gradient(135deg, var(--accent), #ffd6e7, #ff6b95);
-          }
-          100% {
-            background: linear-gradient(135deg, var(--accent), #ff6b95, #ffd6e7);
-          }
-        }
-        
+
         .image-wrapper {
           width: 200px;
           height: 200px;
           border-radius: 50%;
           overflow: hidden;
-          border: 4px solid white;
+          border: 4px solid rgba(255, 255, 255, 0.8);
           background: white;
           display: flex;
           align-items: center;
           justify-content: center;
+          position: relative;
+          z-index: 2;
+          transition: all 0.3s ease;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
-        /* Pastikan elemen <img> dari Next.js melingkar */
-        :global(img.profile-img) {
-          border-radius: 50%;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
+        .profile-container:hover .image-wrapper {
+          border-color: rgba(255, 255, 255, 1);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+          transform: scale(1.05);
         }
 
-        .profile-img {
-          transition: all 0.5s ease;
-          filter: grayscale(0.1);
+        /* Pastikan gambar melingkar sempurna */
+        :global(.profile-img) {
+          border-radius: 50% !important;
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: cover !important;
+          transition: all 0.5s ease !important;
         }
 
         .profile-img.hovered {
-          transform: scale(1.05);
-          filter: grayscale(0) brightness(1.05);
+          filter: grayscale(0) brightness(1.1) contrast(1.05);
         }
-        
+
         .profile-glow {
           position: absolute;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          width: 240px;
-          height: 240px;
+          width: 220px;
+          height: 220px;
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(255, 133, 162, 0.2) 0%, transparent 70%);
+          background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
           opacity: 0;
           transition: all 0.5s ease;
-          z-index: -1;
+          z-index: 1;
+          filter: blur(20px);
         }
-        
+
         .profile-container:hover .profile-glow {
-          opacity: 1;
-          animation: pulseGlow 2s ease-in-out infinite;
+          opacity: 0.6;
+          width: 240px;
+          height: 240px;
+          animation: rotate 3s linear infinite;
         }
-        
-        @keyframes pulseGlow {
-          0%, 100% {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 0.6;
-          }
-          50% {
-            transform: translate(-50%, -50%) scale(1.1);
-            opacity: 0.8;
-          }
-        }
-        
+
         .floating-elements {
           position: absolute;
           top: 0;
@@ -217,265 +189,218 @@ export default function Hero() {
           height: 100%;
           pointer-events: none;
         }
-        
+
         .floating-element {
           position: absolute;
-          font-size: 1.2rem;
-          animation: float 3s ease-in-out infinite;
-          opacity: 0.7;
+          font-size: 1.5rem;
+          opacity: 0;
+          transition: all 0.5s ease;
         }
-        
+
+        .profile-container:hover .floating-element {
+          opacity: 1;
+        }
+
         .element-1 {
-          top: 10%;
-          left: 10%;
-          animation-delay: 0s;
+          top: -20px;
+          left: 50%;
+          animation: float 3s ease-in-out infinite;
         }
-        
+
         .element-2 {
-          top: 15%;
-          right: 10%;
-          animation-delay: 0.5s;
+          top: 50%;
+          right: -20px;
+          animation: float 3s ease-in-out infinite 0.5s;
         }
-        
+
         .element-3 {
-          bottom: 25%;
-          left: 5%;
-          animation-delay: 1s;
+          bottom: -20px;
+          left: 50%;
+          animation: float 3s ease-in-out infinite 1s;
         }
-        
+
         .element-4 {
-          bottom: 20%;
-          right: 15%;
-          animation-delay: 1.5s;
+          top: 50%;
+          left: -20px;
+          animation: float 3s ease-in-out infinite 1.5s;
         }
-        
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px) rotate(0deg);
-          }
-          33% {
-            transform: translateY(-10px) rotate(5deg);
-          }
-          66% {
-            transform: translateY(5px) rotate(-5deg);
-          }
-        }
-        
+
         h1 {
           font-size: 3rem;
+          color: white;
           margin-bottom: 1rem;
-          background: linear-gradient(135deg, var(--accent), #ff6b95);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          animation: textShine 3s ease-in-out infinite;
+          font-weight: 700;
         }
-        
-        @keyframes textShine {
-          0%, 100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-        }
-        
+
         .subtitle {
-          font-size: 1.3rem;
-          color: var(--accent);
+          font-size: 1.5rem;
+          color: rgba(255, 255, 255, 0.9);
           margin-bottom: 1.5rem;
-          font-weight: 600;
-          animation: subtitleFade 2s ease-in-out;
+          font-weight: 300;
         }
-        
-        @keyframes subtitleFade {
-          0% {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
+
         .description {
           font-size: 1.1rem;
-          color: var(--light-text);
-          margin-bottom: 2.5rem;
-          line-height: 1.8;
-          animation: descriptionSlide 1s ease 0.5s both;
+          color: rgba(255, 255, 255, 0.8);
+          max-width: 600px;
+          margin: 0 auto 2rem;
+          line-height: 1.6;
         }
-        
-        @keyframes descriptionSlide {
-          0% {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
+
         .btn-group {
           display: flex;
           gap: 1rem;
           justify-content: center;
           margin-bottom: 3rem;
           flex-wrap: wrap;
-          animation: buttonsPop 1s ease 0.8s both;
         }
-        
-        @keyframes buttonsPop {
-          0% {
-            opacity: 0;
-            transform: scale(0.8);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-        
+
         .btn {
           padding: 12px 30px;
-          border-radius: 25px;
+          border-radius: 50px;
           text-decoration: none;
           font-weight: 600;
           transition: all 0.3s ease;
-          display: inline-flex;
+          display: flex;
           align-items: center;
-          gap: 0.5rem;
-          position: relative;
-          overflow: hidden;
+          gap: 8px;
         }
-        
-        .btn::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-          transition: left 0.5s;
-        }
-        
-        .btn:hover::before {
-          left: 100%;
-        }
-        
+
         .btn-primary {
-          background: var(--accent);
-          color: white;
-          box-shadow: var(--shadow);
+          background: white;
+          color: #667eea;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        
+
         .btn-primary:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 15px 35px rgba(255, 133, 162, 0.4);
+          transform: translateY(-3px);
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
-        
+
         .btn-outline {
-          border: 2px solid var(--accent);
-          color: var(--accent);
+          border: 2px solid white;
+          color: white;
           background: transparent;
         }
-        
+
         .btn-outline:hover {
-          background: var(--accent);
-          color: white;
-          transform: translateY(-2px);
+          background: white;
+          color: #667eea;
+          transform: translateY(-3px);
         }
-        
+
         .stats {
           display: flex;
           justify-content: center;
           gap: 3rem;
-          margin-top: 2rem;
-          animation: statsFade 1s ease 1s both;
+          flex-wrap: wrap;
         }
-        
-        @keyframes statsFade {
-          0% {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
+
         .stat-item {
           text-align: center;
-          position: relative;
         }
-        
+
         .stat-number {
+          display: block;
           font-size: 2rem;
           font-weight: 700;
-          color: var(--accent);
-          display: block;
-          transition: all 0.3s ease;
+          color: white;
+          margin-bottom: 0.5rem;
         }
-        
-        .stat-item:hover .stat-number {
-          transform: scale(1.1);
-          text-shadow: 0 0 10px rgba(255, 133, 162, 0.3);
-        }
-        
+
         .stat-label {
           font-size: 0.9rem;
-          color: var(--light-text);
-          transition: color 0.3s ease;
+          color: rgba(255, 255, 255, 0.7);
+          text-transform: uppercase;
+          letter-spacing: 1px;
         }
-        
-        .stat-item:hover .stat-label {
-          color: var(--text);
+
+        /* Animations */
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0) scale(1);
+          }
+          50% {
+            transform: translateY(-10px) scale(1.1);
+          }
         }
-        
-        /* ukuran lebih kecil di mobile */
+
+        @keyframes rotate {
+          0% {
+            transform: translate(-50%, -50%) rotate(0deg);
+          }
+          100% {
+            transform: translate(-50%, -50%) rotate(360deg);
+          }
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-          .hero {
-            padding: 150px 0 80px;
-          }
-          
-          h1 {
-            font-size: 2.2rem;
-          }
-          
-          .profile-frame {
-            width: 180px;
-            height: 180px;
-          }
-          
           .image-wrapper {
             width: 160px;
             height: 160px;
           }
-          
-          .stats {
-            gap: 2rem;
+
+          h1 {
+            font-size: 2.2rem;
           }
-          
-          .stat-number {
-            font-size: 1.5rem;
+
+          .subtitle {
+            font-size: 1.2rem;
           }
-          
+
+          .description {
+            font-size: 1rem;
+            padding: 0 1rem;
+          }
+
           .btn-group {
             flex-direction: column;
             align-items: center;
           }
-          
+
           .btn {
             width: 200px;
             justify-content: center;
           }
-          
-          .floating-element {
-            font-size: 1rem;
+
+          .stats {
+            gap: 2rem;
+          }
+
+          .stat-number {
+            font-size: 1.5rem;
+          }
+
+          .profile-glow {
+            width: 180px;
+            height: 180px;
+          }
+
+          .profile-container:hover .profile-glow {
+            width: 200px;
+            height: 200px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .image-wrapper {
+            width: 140px;
+            height: 140px;
+          }
+
+          h1 {
+            font-size: 1.8rem;
+          }
+
+          .profile-glow {
+            width: 160px;
+            height: 160px;
+          }
+
+          .profile-container:hover .profile-glow {
+            width: 180px;
+            height: 180px;
           }
         }
       `}</style>
