@@ -21,16 +21,16 @@ export default function Hero() {
             className="profile-img"
             priority
           />
-          <h1>Halo, Saya Riyo</h1>
+          <h1>Halo, Perkenalkan Saya Riyo</h1>
           <div className="subtitle">Anime Content Creator & Creative Developer</div>
           <p className="description">
-            Passion untuk menciptakan konten anime yang menarik dan menghibur. 
-            Saya suka berbagi kecintaan pada anime melalui berbagai platform 
-            media dan teknologi kreatif.
+            Saya memiliki passion dalam menciptakan konten anime yang menarik dan menghibur. 
+            Senang berbagi kecintaan terhadap anime melalui berbagai platform media 
+            dan teknologi kreatif.
           </p>
           <div className="btn-group">
             <a href="#projects" className="btn btn-primary">
-              <i className="fas fa-rocket"></i> Link Project
+              <i className="fas fa-rocket"></i> Lihat Project Saya
             </a>
             <a href="#contact" className="btn btn-outline">
               <i className="fas fa-paper-plane"></i> Hubungi Saya
@@ -43,11 +43,11 @@ export default function Hero() {
             </div>
             <div className="stat-item">
               <span className="stat-number">3</span>
-              <div className="stat-label">Tahun Experience</div>
+              <div className="stat-label">Tahun Pengalaman</div>
             </div>
             <div className="stat-item">
               <span className="stat-number">10K+</span>
-              <div className="stat-label">Followers</div>
+              <div className="stat-label">Pengikut</div>
             </div>
           </div>
         </div>
