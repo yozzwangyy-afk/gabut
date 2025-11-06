@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react'
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -21,22 +20,18 @@ export default function Header() {
             <i className="fas fa-star"></i>
             <span>Riyo</span>
           </div>
-          <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-            <li><a href="#home" onClick={() => setIsMenuOpen(false)}>Home</a></li>
-            <li><a href="#about" onClick={() => setIsMenuOpen(false)}>Tentang</a></li>
-            <li><a href="#projects" onClick={() => setIsMenuOpen(false)}>Project</a></li>
-            <li><a href="#contact" onClick={() => setIsMenuOpen(false)}>Kontak</a></li>
+          <ul className="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#projects">Project</a></li>
+            <li><a href="#about">Tentang</a></li>
+            <li><a href="#contact">Kontak</a></li>
           </ul>
-          <div className="hamburger" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
-          </div>
         </nav>
       </div>
       <style jsx>{`
         .header {
-          background-color: rgba(255, 255, 255, 0.9);
+          background: var(--card);
           backdrop-filter: blur(10px);
-          box-shadow: var(--shadow);
           position: fixed;
           width: 100%;
           top: 0;
@@ -45,45 +40,41 @@ export default function Header() {
         }
         
         .header.scrolled {
-          background-color: rgba(255, 255, 255, 0.95);
-          box-shadow: 0 4px 20px rgba(255, 133, 162, 0.2);
+          box-shadow: var(--shadow);
         }
         
         .nav {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 20px 0;
+          padding: 1.5rem 0;
         }
         
         .logo {
           font-size: 1.8rem;
           font-weight: 700;
-          color: var(--accent-color);
+          color: var(--accent);
           display: flex;
           align-items: center;
-        }
-        
-        .logo i {
-          margin-right: 10px;
+          gap: 0.5rem;
         }
         
         .nav-links {
           display: flex;
+          gap: 2rem;
           list-style: none;
-          gap: 30px;
         }
         
         .nav-links a {
           text-decoration: none;
-          color: var(--text-color);
+          color: var(--text);
           font-weight: 500;
-          transition: all 0.3s ease;
+          transition: color 0.3s ease;
           position: relative;
         }
         
         .nav-links a:hover {
-          color: var(--accent-color);
+          color: var(--accent);
         }
         
         .nav-links a::after {
@@ -93,7 +84,7 @@ export default function Header() {
           height: 2px;
           bottom: -5px;
           left: 0;
-          background-color: var(--accent-color);
+          background: var(--accent);
           transition: width 0.3s ease;
         }
         
@@ -101,42 +92,9 @@ export default function Header() {
           width: 100%;
         }
         
-        .hamburger {
-          display: none;
-          cursor: pointer;
-          font-size: 1.5rem;
-          color: var(--text-color);
-        }
-        
         @media (max-width: 768px) {
           .nav-links {
             display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background-color: white;
-            flex-direction: column;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            gap: 15px;
-          }
-          
-          .nav-links.active {
-            display: flex;
-          }
-          
-          .nav-links li {
-            margin: 0;
-          }
-          
-          .nav-links a {
-            display: block;
-            padding: 10px 0;
-          }
-          
-          .hamburger {
-            display: block;
           }
         }
       `}</style>
