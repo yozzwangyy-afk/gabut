@@ -21,7 +21,7 @@ export default function Header() {
             <span>Riyo</span>
           </div>
           <ul className="nav-links">
-            <li><a href="#home">Home</a></li>
+            <li><a href="#home">Beranda</a></li>
             <li><a href="#projects">Project</a></li>
             <li><a href="#about">Tentang</a></li>
             <li><a href="#contact">Kontak</a></li>
