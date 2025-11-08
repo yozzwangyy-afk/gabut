@@ -1,11 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    appDir: true,
+    serverComponentsExternalPackages: ['child_process'],
   },
-  images: {
-    domains: ['files.catbox.moe'],
-    unoptimized: true
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+    responseLimit: '10mb',
+  },
+  webpack: (config) => {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      child_process: false,
+    };
+    return config;
   },
 }
 
