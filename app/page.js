@@ -1,172 +1,118 @@
 'use client'
 import { useState } from 'react'
+import DownloadForm from '../components/DownloadForm'
 
 export default function Home() {
-  const [url, setUrl] = useState('')
-  const [format, setFormat] = useState('1080p')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [recentDownloads, setRecentDownloads] = useState([])
 
-  const handleDownload = async (type) => {
-    if (!url) {
-      setError('Masukkan URL YouTube')
-      return
-    }
-
-    setLoading(true)
-    setError('')
-
-    try {
-      const response = await fetch('/api/download', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          url,
-          format,
-          type: type === 'video' ? 'mp4' : 'mp3'
-        }),
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || 'Download gagal')
-      }
-
-      const blob = await response.blob()
-      const filename = response.headers.get('content-disposition')?.split('filename=')[1] || 'download'
-      
-      // Create download link
-      const downloadUrl = window.URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = downloadUrl
-      a.download = filename
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      window.URL.revokeObjectURL(downloadUrl)
-
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
-    }
+  const addToRecent = (download) => {
+    setRecentDownloads(prev => [download, ...prev.slice(0, 4)])
   }
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
-      <h1 style={{ textAlign: 'center', color: '#333' }}>YouTube Downloader</h1>
-      
-      <div style={{ background: '#f5f5f5', padding: '20px', borderRadius: '8px' }}>
-        <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-            URL YouTube:
-          </label>
-          <input
-            type="text"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            placeholder="https://youtu.be/..."
-            style={{
-              width: '100%',
-              padding: '10px',
-              border: '1px solid #ddd',
-              borderRadius: '4px',
-              fontSize: '16px'
-            }}
-          />
-        </div>
+    <div className="container">
+      {/* Hero Section */}
+      <section style={{ 
+        textAlign: 'center', 
+        padding: '4rem 0 2rem 0',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        color: 'white',
+        borderRadius: '0 0 20px 20px',
+        marginBottom: '2rem'
+      }}>
+        <h1 style={{ 
+          fontSize: '3rem', 
+          marginBottom: '1rem',
+          fontWeight: 'bold'
+        }}>
+          YouTube Downloader
+        </h1>
+        <p style={{ 
+          fontSize: '1.2rem', 
+          opacity: 0.9,
+          maxWidth: '600px',
+          margin: '0 auto'
+        }}>
+          Download video dan audio dari YouTube dengan kualitas tinggi. Cepat, mudah, dan gratis!
+        </p>
+      </section>
 
-        <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-            Format:
-          </label>
-          <select
-            value={format}
-            onChange={(e) => setFormat(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '10px',
-              border: '1px solid #ddd',
-              borderRadius: '4px',
-              fontSize: '16px'
-            }}
-          >
-            <optgroup label="Video">
-              <option value="144p">144p</option>
-              <option value="240p">240p</option>
-              <option value="360p">360p</option>
-              <option value="720p">720p</option>
-              <option value="1080p">1080p</option>
-            </optgroup>
-            <optgroup label="Audio">
-              <option value="128k">128k (MP3)</option>
-              <option value="320k">320k (MP3)</option>
-            </optgroup>
-          </select>
-        </div>
+      {/* Download Form Section */}
+      <section className="card">
+        <DownloadForm onDownloadSuccess={addToRecent} />
+      </section>
 
-        {error && (
-          <div style={{
-            background: '#ffebee',
-            color: '#c62828',
-            padding: '10px',
-            borderRadius: '4px',
-            marginBottom: '15px'
-          }}>
-            {error}
+      {/* Features Section */}
+      <section style={{ margin: '3rem 0' }}>
+        <h2 style={{ 
+          textAlign: 'center', 
+          marginBottom: '2rem',
+          color: '#333'
+        }}>
+          Mengapa Pilih YouTube Downloader Kami?
+        </h2>
+        <div className="grid grid-2">
+          <div style={{ textAlign: 'center', padding: '1.5rem' }}>
+            <div style={{
+              width: '80px',
+              height: '80px',
+              background: 'linear-gradient(135deg, #ff0000, #cc0000)',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 1rem auto',
+              color: 'white',
+              fontSize: '2rem'
+            }}>
+              ⚡
+            </div>
+            <h3 style={{ marginBottom: '1rem' }}>Cepat & Efisien</h3>
+            <p>Proses download yang cepat dengan server yang optimal</p>
           </div>
-        )}
-
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <button
-            onClick={() => handleDownload('video')}
-            disabled={loading || !url}
-            style={{
-              flex: 1,
-              padding: '12px',
-              background: '#ff0000',
+          <div style={{ textAlign: 'center', padding: '1.5rem' }}>
+            <div style={{
+              width: '80px',
+              height: '80px',
+              background: 'linear-gradient(135deg, #2196f3, #1976d2)',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 1rem auto',
               color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              fontSize: '16px',
-              cursor: loading || !url ? 'not-allowed' : 'pointer',
-              opacity: loading || !url ? 0.6 : 1
-            }}
-          >
-            {loading ? 'Memproses...' : 'Download Video'}
-          </button>
-
-          <button
-            onClick={() => handleDownload('audio')}
-            disabled={loading || !url}
-            style={{
-              flex: 1,
-              padding: '12px',
-              background: '#2196f3',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              fontSize: '16px',
-              cursor: loading || !url ? 'not-allowed' : 'pointer',
-              opacity: loading || !url ? 0.6 : 1
-            }}
-          >
-            {loading ? 'Memproses...' : 'Download Audio'}
-          </button>
+              fontSize: '2rem'
+            }}>
+              🎯
+            </div>
+            <h3 style={{ marginBottom: '1rem' }}>Kualitas Terbaik</h3>
+            <p>Download dengan kualitas hingga 1080p untuk video dan 320kbps untuk audio</p>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div style={{ marginTop: '20px', fontSize: '14px', color: '#666' }}>
-        <h3>Cara Penggunaan:</h3>
-        <ol>
-          <li>Salin URL video YouTube</li>
-          <li>Tempel URL di atas</li>
-          <li>Pilih format yang diinginkan</li>
-          <li>Klik tombol download</li>
-        </ol>
-      </div>
+      {/* How to Use Section */}
+      <section className="card">
+        <h2 style={{ marginBottom: '1.5rem' }}>Cara Menggunakan</h2>
+        <div className="grid grid-2">
+          <div>
+            <h4 style={{ marginBottom: '1rem', color: '#ff0000' }}>1. Salin URL</h4>
+            <p>Salin URL video YouTube yang ingin didownload</p>
+          </div>
+          <div>
+            <h4 style={{ marginBottom: '1rem', color: '#2196f3' }}>2. Tempel & Pilih Format</h4>
+            <p>Tempel URL dan pilih format yang diinginkan</p>
+          </div>
+          <div>
+            <h4 style={{ marginBottom: '1rem', color: '#4caf50' }}>3. Download</h4>
+            <p>Klik tombol download dan tunggu proses selesai</p>
+          </div>
+          <div>
+            <h4 style={{ marginBottom: '1rem', color: '#ff9800' }}>4. Selesai</h4>
+            <p>File akan otomatis terdownload ke perangkat Anda</p>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
