@@ -110,6 +110,8 @@ export default function DownloadForm({ onDownloadSuccess }) {
       setUrl(text)
     } catch (err) {
       console.error('Failed to read clipboard:', err)
+      // Fallback for browsers that don't support clipboard API
+      setError('Browser tidak mendukung paste otomatis. Silakan paste manual.')
     }
   }
 
