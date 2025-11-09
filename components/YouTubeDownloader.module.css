@@ -454,3 +454,64 @@
     padding: 15px;
   }
 }
+
+/* Tambahkan styles ini di file CSS yang sudah ada */
+
+.exampleSection {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.exampleText {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.exampleLink {
+  background: none;
+  border: none;
+  color: #ff0000;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.exampleLink:hover {
+  color: #cc0000;
+}
+
+.errorContent {
+  flex: 1;
+}
+
+.debugButton {
+  background: #f39c12;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.noOptions {
+  text-align: center;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin: 10px 0;
+  color: #666;
+}
+
+/* Tambahan untuk responsive design */
+@media (max-width: 768px) {
+  .exampleText {
+    font-size: 0.8rem;
+  }
+  
+  .exampleLink {
+    font-size: 0.8rem;
+    display: block;
+    margin-top: 5px;
+  }
+}
