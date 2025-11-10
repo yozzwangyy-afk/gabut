@@ -24,7 +24,8 @@ export default function Home() {
     setVideo(null)
 
     try {
-      const res = await fetch(`https://api.luxzoffc.web.id/download/ytdl?url=${encodeURIComponent(url)}`)
+      // 🔥 sekarang pakai endpoint lokal agar bebas CORS
+      const res = await fetch(`/api/ytdl?url=${encodeURIComponent(url)}`)
       const data = await res.json()
 
       if (data.status !== 'success') {
@@ -51,7 +52,9 @@ export default function Home() {
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-400 to-purple-600 p-6">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-8 text-center">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800">YouTube Video Downloader</h1>
+        <h1 className="text-3xl font-bold mb-6 text-gray-800">
+          YouTube Video Downloader
+        </h1>
 
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <input
@@ -78,7 +81,9 @@ export default function Home() {
         )}
 
         {error && (
-          <div className="bg-red-100 text-red-600 p-3 rounded-lg mt-4 font-medium">{error}</div>
+          <div className="bg-red-100 text-red-600 p-3 rounded-lg mt-4 font-medium">
+            {error}
+          </div>
         )}
 
         {video && (
@@ -88,7 +93,9 @@ export default function Home() {
               alt="Thumbnail"
               className="w-40 h-40 mx-auto rounded-xl object-cover shadow-md"
             />
-            <h2 className="text-xl font-semibold text-gray-800 mt-4 mb-3">{video.title}</h2>
+            <h2 className="text-xl font-semibold text-gray-800 mt-4 mb-3">
+              {video.title}
+            </h2>
 
             <div className="grid gap-4 mt-6">
               {video.formats?.map((f, idx) =>
@@ -101,7 +108,9 @@ export default function Home() {
                       <p className="font-semibold text-indigo-600">
                         {f.qualityLabel || f.quality || 'Audio Only'}
                       </p>
-                      <p className="text-sm text-gray-500">{formatFileSize(f.fileSize)}</p>
+                      <p className="text-sm text-gray-500">
+                        {formatFileSize(f.fileSize)}
+                      </p>
                     </div>
                     <a
                       href={f.url}
